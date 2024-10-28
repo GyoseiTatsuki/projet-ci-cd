@@ -7,7 +7,7 @@ on:
   pull_request:    
 
 env:
-  DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }} 
+  DEPLOY_ENV: ${{ variables.DEPLOY_ENV }} 
 
 
 jobs:
