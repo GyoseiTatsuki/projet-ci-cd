@@ -1,16 +1,16 @@
 name: CI Pipeline  # Nom du workflow
 
-on:                # Événements qui déclenchent le workflow
-  push:            # Lors d'un push
+on:              
+  push:        
     branches:
-      - main       # Sur la branche main
-  pull_request:    # Ou lors d'une pull request vers main
+      - main    
+  pull_request:    
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu
-    container:              # Utilise une image Docker
-      image: docker:latest  # Utilise l'image Docker officielle la plus récente
+    runs-on: ubuntu-latest 
+    container:              
+      image: docker:latest  
     
     steps:
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
 
   test_job_1:
     runs-on: ubuntu-latest
-    needs: build  # Exécute cette étape après "build"
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
 
   test_job_2:
     runs-on: ubuntu-latest
-    needs: build  # Exécute cette étape après "build"
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [test_job_1, test_job_2]  # Exécute cette étape après les deux jobs de test
+    needs: [test_job_1, test_job_2]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
