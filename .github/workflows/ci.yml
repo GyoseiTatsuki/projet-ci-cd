@@ -3,20 +3,21 @@ name: CI Pipeline  # Nom du workflow
 on:              
   push:        
     branches:
-      - main       # La branche principale 
-    tags:          # Pour exécuter le déploiement lors d'un tag
-      - 'v*'     
+      - main  # La branche principale 
+    tags:    
+      - 'v*' # Pour exécuter le déploiement lors d'un tag commençant par "v"
 
 jobs:
   build:
     runs-on: ubuntu-latest 
     container:              
       image: docker:latest  
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+        # Récupère le code source du projet depuis le dépôt.
+
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -26,9 +27,15 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+        # Utilise le cache pour les modules Node.js pour accélérer les builds en cas de dépendances inchangées.
+
+      - name: Install dependencies
+        run: npm install
+        # Installe les dépendances Node.js pour préparer l'application.
 
       - name: Build the application
         run: echo "Building the application..."
+        # Exécute le processus de build de l'application.
 
   test_job_1:
     runs-on: ubuntu-latest
@@ -46,9 +53,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+        # Réutilise le cache des dépendances Node.js pour accélérer les tests.
 
       - name: Run test job 1
         run: echo "Test réussi pour le job 1"
+        # Exécute le premier ensemble de tests.
 
   test_job_2:
     runs-on: ubuntu-latest
@@ -56,7 +65,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -66,18 +75,30 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+        # Réutilise le cache des dépendances Node.js pour le deuxième ensemble de tests.
 
       - name: Run test job 2
         run: echo "Test réussi pour le job 2"
+        # Exécute le deuxième ensemble de tests.
 
   deploy:
     runs-on: ubuntu-latest
     needs: [test_job_1, test_job_2]
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Deploy the application
         run: |
           echo "Déploiement réussi"
           echo "Environnement de déploiement : ${{ secrets.DEPLOY_ENV }}"
+        # Déploie l'application en fonction de l'environnement spécifié.
+
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Déploiement terminé avec succès pour la branche : ${{ github.ref }}"
+          SLACK_COLOR: good
+        # Envoie une notification de déploiement réussi sur Slack.
