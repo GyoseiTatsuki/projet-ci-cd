@@ -7,7 +7,7 @@ on:
   pull_request:    
 
 env:
-  DEPLOY_ENV: production  
+  DEPLOY_ENV: ${{ secrets.MY_SECRET }} 
 
 
 jobs:
@@ -53,4 +53,4 @@ jobs:
       - name: Deploy the application
         run: |
           echo "Déploiement réussi"
-          echo "Environnement de déploiement : ${{ secrets.DEPLOY_ENV }}"
+          echo "Environnement de déploiement : $DEPLOY_ENV"
