@@ -1,0 +1,30 @@
+stages:
+  - build
+  - test
+  - deploy
+
+# Étape 1 : Build
+build:
+  stage: build
+  image: alpine:latest         # Utilise une image Docker pour le job
+  script:
+    - echo "Building the application..."
+
+# Étape 2 : Test
+test_job_1:
+  stage: test
+  script:
+    - echo "Test réussi pour le job 1"
+  parallel: 2                  # Spécifie que ce job doit être exécuté en parallèle
+
+test_job_2:
+  stage: test
+  script:
+    - echo "Test réussi pour le job 2"
+  parallel: 2                  # Spécifie que ce job doit être exécuté en parallèle
+
+# Étape 3 : Deploy
+deploy:
+  stage: deploy
+  script:
+    - echo "Déploiement réussi"
