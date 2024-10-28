@@ -6,8 +6,8 @@ on:
       - main    
   pull_request:    
 
-env:
-  DEPLOY_ENV: production 
+# env:
+#   DEPLOY_ENV: production 
 
 
 jobs:
