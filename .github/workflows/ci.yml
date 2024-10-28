@@ -32,7 +32,6 @@ jobs:
       - name: Build the application
         run: |
           echo "Building the application..."
-          npm install  # ou votre commande de build
 
       # Sauvegarde des artefacts de build
       - name: Upload build artifacts
