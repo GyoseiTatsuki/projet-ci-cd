@@ -6,6 +6,10 @@ on:
       - main    
   pull_request:    
 
+env:
+  DEPLOY_ENV: production  
+
+
 jobs:
   build:
     runs-on: ubuntu-latest 
