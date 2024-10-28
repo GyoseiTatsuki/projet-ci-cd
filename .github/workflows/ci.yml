@@ -53,4 +53,4 @@ jobs:
       - name: Deploy the application
         run: |
           echo "Déploiement réussi"
-          echo "Environnement de déploiement : $DEPLOY_ENV"
+          echo "Environnement de déploiement : ${{ secrets.DEPLOY_ENV }}""
