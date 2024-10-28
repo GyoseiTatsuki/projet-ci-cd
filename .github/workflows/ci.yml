@@ -7,24 +7,21 @@ on:                # Événements qui déclenchent le workflow
   pull_request:    # Ou lors d'une pull request vers main
 
 jobs:
-build:
-    runs-on: ubuntu-latest   # Utilise une machine virtuelle Ubuntu pour le job
-    container:               # Spécifie l'image Docker à utiliser
-      image: node:14        # Utilisez une image Docker de Node.js (par exemple, version 14)
+  build:
+    runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu
+    container:              # Utilise une image Docker
+      image: docker:latest  # Utilise l'image Docker officielle la plus récente
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         
       - name: Build the application
-        run: |
-          echo "Building the application..."
-          # Ajoutez ici les commandes de construction de votre application
-  
+        run: echo "Building the application..."
 
   test_job_1:
     runs-on: ubuntu-latest
-    needs: build    # Exécute cette étape après "build"
+    needs: build  # Exécute cette étape après "build"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -34,7 +31,7 @@ build:
 
   test_job_2:
     runs-on: ubuntu-latest
-    needs: build    # Exécute cette étape après "build"
+    needs: build  # Exécute cette étape après "build"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
