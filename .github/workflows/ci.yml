@@ -81,3 +81,5 @@ jobs:
         run: |
           echo "Déploiement réussi"
           echo "Environnement de déploiement : ${{ secrets.DEPLOY_ENV }}"
+
+          

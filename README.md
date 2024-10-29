@@ -72,3 +72,6 @@ Le pipeline exécute deux jobs de test en parallèle après le build :
 
 ## Variables d'environnement
 - `DEPLOY_ENV` : Variable secrète utilisée pour le déploiement
+
+## Notifications 
+- Les notifications se font par l’intermédiaire de GitHub, qui informe une adresse spécifiée de l’avancement des pipelines.
