@@ -29,7 +29,7 @@ Solution pour améliorer le build et le déploiement de la CI :
     # CI Pipeline Documentation
 
 ## Vue d'ensemble
-Ce pipeline CI est configuré pour s'exécuter sur GitHub Actions. Il comprend plusieurs étapes allant du build au déploiement, avec des tests intermédiaires.
+Ce pipeline CI est configuré pour s'exécuter sur GitHub Actions. Il comprend plusieurs étapes allant du build au déploiement, avec des tests intermédiaires. L'application est non fonctionnelle pour simuler  les tests de build et de déploiement.
 
 ## Déclencheurs
 Le pipeline se déclenche sur :
@@ -48,7 +48,8 @@ Le pipeline se déclenche sur :
 ### 2. Tests
 Le pipeline exécute deux jobs de test en parallèle après le build :
 
-#### Test Job 1
+#### Test Job 1 et Job 2 en  parallèle
+
 - Dépend de l'étape build
 - Environnement : Ubuntu latest
 - Actions :
@@ -56,21 +57,13 @@ Le pipeline exécute deux jobs de test en parallèle après le build :
   - Utilisation du cache Node.js
   - Exécution du premier ensemble de tests
 
-#### Test Job 2
-- Dépend de l'étape build
-- Environnement : Ubuntu latest
-- Actions :
-  - Checkout du code
-  - Utilisation du cache Node.js
-  - Exécution du second ensemble de tests
-
 ### 3. Déploiement
 - Se déclenche uniquement après la réussite des deux jobs de test
 - Environnement : Ubuntu latest
 - Actions :
   - Checkout du code
   - Déploiement de l'application
-  - Utilisation de variables d'environnement secrètes (DEPLOY_ENV)
+  - Utilisation de variables d'environnement (DEPLOY_ENV)
 
 ## Optimisations
 - Utilisation du cache pour les dépendances Node.js
@@ -79,11 +72,3 @@ Le pipeline exécute deux jobs de test en parallèle après le build :
 
 ## Variables d'environnement
 - `DEPLOY_ENV` : Variable secrète utilisée pour le déploiement
-
-## Prérequis
-- Accès GitHub avec permissions suffisantes
-- Secrets configurés dans les paramètres du repository
-- Node.js et dépendances nécessaires
-
-## Note
-Ce pipeline est configuré pour un workflow basique mais peut être étendu selon les besoins spécifiques du projet.
