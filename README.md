@@ -25,3 +25,65 @@ Solution pour améliorer le build et le déploiement de la CI :
 
 - **Utilisation d'artefacts :**
     - Stocker les artefacts générés lors des builds pour les réutiliser entre les étapes ou pour des tests ultérieurs.
+
+    # CI Pipeline Documentation
+
+## Vue d'ensemble
+Ce pipeline CI est configuré pour s'exécuter sur GitHub Actions. Il comprend plusieurs étapes allant du build au déploiement, avec des tests intermédiaires.
+
+## Déclencheurs
+Le pipeline se déclenche sur :
+- Les push sur la branche `main`
+- Les tags commençant par 'v' (ex: v1.0.0)
+
+## Étapes du Pipeline
+
+### 1. Build
+- Environnement : Ubuntu latest avec container Docker
+- Actions :
+  - Checkout du code source
+  - Mise en cache des modules Node.js pour optimiser les builds suivants
+  - Construction de l'application
+
+### 2. Tests
+Le pipeline exécute deux jobs de test en parallèle après le build :
+
+#### Test Job 1
+- Dépend de l'étape build
+- Environnement : Ubuntu latest
+- Actions :
+  - Checkout du code
+  - Utilisation du cache Node.js
+  - Exécution du premier ensemble de tests
+
+#### Test Job 2
+- Dépend de l'étape build
+- Environnement : Ubuntu latest
+- Actions :
+  - Checkout du code
+  - Utilisation du cache Node.js
+  - Exécution du second ensemble de tests
+
+### 3. Déploiement
+- Se déclenche uniquement après la réussite des deux jobs de test
+- Environnement : Ubuntu latest
+- Actions :
+  - Checkout du code
+  - Déploiement de l'application
+  - Utilisation de variables d'environnement secrètes (DEPLOY_ENV)
+
+## Optimisations
+- Utilisation du cache pour les dépendances Node.js
+- Exécution parallèle des tests
+- Dépendances conditionnelles entre les jobs
+
+## Variables d'environnement
+- `DEPLOY_ENV` : Variable secrète utilisée pour le déploiement
+
+## Prérequis
+- Accès GitHub avec permissions suffisantes
+- Secrets configurés dans les paramètres du repository
+- Node.js et dépendances nécessaires
+
+## Note
+Ce pipeline est configuré pour un workflow basique mais peut être étendu selon les besoins spécifiques du projet.
