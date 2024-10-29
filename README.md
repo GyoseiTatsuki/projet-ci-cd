@@ -75,3 +75,6 @@ Le pipeline exécute deux jobs de test en parallèle après le build :
 
 ## Notifications 
 - Les notifications se font par l’intermédiaire de GitHub, qui informe une adresse spécifiée de l’avancement des pipelines.
+
+## Git Pages
+- Nous avons utilisé la fonction GitHub Pages pour héberger la documentation de notre application. La documentation est accessible à https://gyoseitatsuki.github.io/projet-ci-cd/.

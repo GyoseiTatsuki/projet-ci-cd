@@ -12,10 +12,54 @@
 <body>
     <h1>Documentation de Mon Application</h1>
     <p>Bienvenue dans la documentation de mon application !</p>
+    
     <h2>Installation</h2>
     <p>Instructions d'installation de l'application...</p>
+    
     <h2>Utilisation</h2>
     <p>Comment utiliser l'application...</p>
+    
+    <h2>Étapes du Pipeline</h2>
+    <h3>1. Build</h3>
+    <ul>
+        <li>Environnement : Ubuntu latest avec container Docker</li>
+        <li>Actions :
+            <ul>
+                <li>Checkout du code source</li>
+                <li>Mise en cache des modules Node.js pour optimiser les builds suivants</li>
+                <li>Construction de l'application</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>2. Tests</h3>
+    <p>Le pipeline exécute deux jobs de test en parallèle après le build :</p>
+    <h4>Test Job 1 et Job 2 en parallèle</h4>
+    <ul>
+        <li>Dépend de l'étape build</li>
+        <li>Environnement : Ubuntu latest</li>
+        <li>Actions :
+            <ul>
+                <li>Checkout du code</li>
+                <li>Utilisation du cache Node.js</li>
+                <li>Exécution du premier ensemble de tests</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3. Déploiement</h3>
+    <ul>
+        <li>Se déclenche uniquement après la réussite des deux jobs de test</li>
+        <li>Environnement : Ubuntu latest</li>
+        <li>Actions :
+            <ul>
+                <li>Checkout du code</li>
+                <li>Déploiement de l'application</li>
+                <li>Utilisation de variables d'environnement (DEPLOY_ENV)</li>
+            </ul>
+        </li>
+    </ul>
+
     <h2>FAQ</h2>
     <p>Questions fréquentes...</p>
 </body>
